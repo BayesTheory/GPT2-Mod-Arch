@@ -36,7 +36,7 @@ Uma modernização extensiva do nanoGPT (Karpathy), atualizada com práticas e o
 
 ### Documento técnico (Overleaf)
 Manuscrito em preparação no Overleaf detalhando decisões de projeto, compatibilidade com GPT-2, e análise teórica das escolhas (RoPE, GQA, SwiGLU, RMSNorm).
-'''https://www.overleaf.com/read/prvwjxcjfxfn#1ebc57'''
+*(ttps://www.overleaf.com/read/prvwjxcjfxfn#1ebc57*
 
 ### Licença
 MIT
