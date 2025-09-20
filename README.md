@@ -1,42 +1,43 @@
-# nanoGPT-moderno: Uma Versão Avançada do GPT-2
+# nanoGPT-moderno
 
-Uma modernização extensiva do nanoGPT (Karpathy), atualizada com práticas e otimizações de LLMs padrão 2024, mantendo o código claro e hackável. O foco é a arquitetura e a compatibilidade com técnicas modernas de inferência. Treinamento e benchmarks não foram realizados por serem computacionalmente pesados.
+[![Licença: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python: 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![PyTorch: 2.x](https://img.shields.io/badge/PyTorch-2.x-orange.svg)](https://pytorch.org/)
 
-### Principais melhorias
+Um fork do `nanoGPT` de Karpathy, atualizado com a arquitetura e as melhores práticas de LLMs de 2024–2025, como RoPE, GQA, SwiGLU e Flash Attention.
 
-| Componente            | GPT-2 Clássico                | Versão Moderna (este projeto)      |
-| :-------------------- | :---------------------------- | :--------------------------------- |
-| Posicionamento        | Embeddings absolutos (wpe)    | Embeddings rotatórios (RoPE)       |
-| Normalização          | LayerNorm                      | RMSNorm                            |
-| Atenção (mecanismo)   | MHA                           | Grouped-Query Attention (GQA)      |
-| Atenção (kernel)      | Implementação manual           | SDPA com FlashAttention (quando disponível) |
-| MLP (ativação)        | GELU                          | SwiGLU                             |
-| Inferência            | Recomputação O(T²)            | KV-Cache incremental O(T)          |
-| Camadas lineares      | Com bias                      | Sem bias (mais estável com RMSNorm) |
-| Saída                 | Logits brutos                 | Logit soft-capping                 |
-| Inicialização         | Do zero/compatível GPT-2      | Transferência parcial de pesos GPT-2 |
-| Estrutura de código   | Monolítica                    | Modular, clara e extensível        |
+Este projeto moderniza o `nanoGPT` para ser uma base de código clara e flexível, focada em arquitetura robusta e inferência otimizada. É a ferramenta ideal para quem quer aprender, experimentar e entender a ponte entre o GPT-2 clássico e arquiteturas modernas como Llama 3.
 
-### Estado do projeto
-- Foco em arquitetura moderna e utilitários de inferência; sem resultados de treino ou ablações empíricas.
-- Suporte a RoPE, GQA, SwiGLU, KV-cache e SDPA/FlashAttention via PyTorch 2.x.
-- Transferência parcial de pesos a partir de checkpoints GPT-2 para facilitar experimentos de compatibilidade.
-- Código sem vieses de treino: camadas lineares sem bias, normalização via RMSNorm e soft-capping de logits para estabilidade.
+---
 
-### Arquivos principais
-- model.py: definição do Transformer moderno (RoPE, GQA, SwiGLU, RMSNorm, KV-cache).
-- generate.py: utilitário de geração com KV-cache e SDPA.
-- data.py: DataLoader leve para shards tokenizados (.npy).
-- configs/: parâmetros de arquitetura e inicialização (inclui presets compatíveis com GPT-2).
+## 🎯 Para Quem é Este Projeto?
 
-### Requisitos
-- Python 3.9+
-- PyTorch 2.x (com suporte a SDPA/FlashAttention quando disponível)
-- numpy, tiktoken, transformers
+*   **Estudantes e Pesquisadores:** Uma base de código limpa para entender na prática os componentes de Transformers modernos.
+*   **Desenvolvedores:** Um ponto de partida sólido e minimalista para prototipar e experimentar com novas arquiteturas.
+*   **Entusiastas:** Para qualquer pessoa que queira treinar seu próprio "GPT" do zero com tecnologia de ponta.
 
-### Documento técnico (Overleaf)
-Manuscrito em preparação no Overleaf detalhando decisões de projeto, compatibilidade com GPT-2, e análise teórica das escolhas (RoPE, GQA, SwiGLU, RMSNorm).
-*www.overleaf.com/read/prvwjxcjfxfn#1ebc57*
+## ✨ Destaques da Arquitetura
 
-### Licença
-MIT
+Esta versão implementa otimizações cruciais que se tornaram padrão em modelos de linguagem de alta performance.
+
+| Componente                 | Versão Clássica (GPT-2)     | Versão Moderna (nanoGPT-moderno)        |
+| :------------------------- | :-------------------------- | :-------------------------------------- |
+| **Embeddings Posicionais** | Absolutos (`wpe`)           | **RoPE** (Rotational Position Embeddings) |
+| **Normalização**           | `LayerNorm`                 | **RMSNorm** (Root Mean Square Norm)     |
+| **Atenção (Mecanismo)**    | MHA (Multi-Head Attention)  | **GQA** (Grouped-Query Attention)       |
+| **Atenção (Kernel)**       | Implementação manual        | **SDPA** (Flash/Efficient Attention)    |
+| **Ativação (MLP)**         | `GELU`                      | **SwiGLU**                              |
+| **Bias em Camadas Densas** | Com bias                    | **Sem bias** para maior estabilidade    |
+| **Inferência**             | Recomputação completa       | **KV-cache** incremental                |
+| **Saída**                  | Logits brutos               | **Logit soft-capping**                  |
+| **Inicialização**          | Padrão GPT-2                | Otimizada para arquitetura moderna      |
+| **Estrutura de Código**    | Monolítica                  | Modular e extensível                    |
+
+## 🚀 Comece a Usar em Minutos
+
+### 1. Requisitos
+
+*   Python 3.9+
+*   PyTorch 2.x (com suporte a CUDA para melhor performance)
+*   Dependências adicionais: `numpy`, `tiktoken`, `transformers`, `tqdm`, `mlflow` (opcional).
+
