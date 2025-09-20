@@ -1,6 +1,7 @@
 # generate.py
 # Versão final e robusta. Carrega um checkpoint e gera texto de forma
 # eficiente e segura, chamando o método model.generate() otimizado.
+# Rian Costa Ferreira.
 
 import sys
 import torch

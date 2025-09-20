@@ -8,7 +8,8 @@
 # - backward "chunked" da CrossEntropy para reduzir pico de memória
 # - barra de progresso (tqdm) no laço de micro-steps para it/s e ETA
 # - seleção de scheduler: LR_SCHEDULE ∈ {'cosine','linear','constant','plateau'} (env) ou config.lr_schedule
-# - throughput correto: loga seq/s e tok/s (= seq/s * block_size)
+# - throughput correto: loga seq/s e tok/s (= seq/s * block_size).
+# Rian Costa Ferreira.
 
 import os
 import time

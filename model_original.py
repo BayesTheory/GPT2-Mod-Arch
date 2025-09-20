@@ -1,7 +1,7 @@
 # model_original.py
 # Este arquivo contém a implementação original do nanoGPT, baseada na arquitetura GPT-2.
 # Serve como referência e comparação para as modificações implementadas em model.py.
-# Rian Costa Ferreira
+# Rian Costa Ferreira.
 import math
 import inspect
 from dataclasses import dataclass

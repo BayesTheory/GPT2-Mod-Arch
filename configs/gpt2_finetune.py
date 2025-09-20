@@ -1,6 +1,7 @@
 # configs/gpt2_finetune.py
 # Configuração para fine-tuning partindo do GPT-2 Small pré-treinado (compatível com pesos originais).
 # Mantém arquitetura idêntica ao GPT-2 Small para carregar todos os pesos; modernizações ficam desativadas.
+# Rian Costa Ferreira.
 
 class Config:
     # --- Ponto de Entrada ---

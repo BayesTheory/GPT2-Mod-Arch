@@ -1,4 +1,5 @@
 # configs/gpt2_from_scratch.py  (perfil tiny para TinyStories, 1x A100 40GB)
+# Rian Costa Ferreira.
 
 class Config:
     # --- Ponto de Entrada ---

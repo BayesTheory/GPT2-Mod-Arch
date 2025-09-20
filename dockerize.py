@@ -1,4 +1,4 @@
-# dockerize.py
+# dockerize.py  
 # Uso em notebook:
 #   from dockerize import write_cpu_image, write_gpu_image, build_image, run_container, verify_local
 #   write_cpu_image()
@@ -8,6 +8,7 @@
 # Sem Docker (verificação local):
 #   from dockerize import verify_local
 #   print(verify_local("./artifacts/model.pt"))
+# Rian Costa Ferreira.
 
 import os
 import sys
@@ -223,3 +224,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+ 

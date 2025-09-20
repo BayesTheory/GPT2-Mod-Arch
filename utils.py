@@ -1,5 +1,6 @@
 # utils.py
 # Funções auxiliares para o projeto, incluindo logging de experimentos com MLflow.
+# Rian Costa Ferreira.
 
 import os
 import random

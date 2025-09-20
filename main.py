@@ -1,7 +1,7 @@
 # main.py
 # Ponto de entrada: escolhe config em configs/, prepara TinyStories, inicia MLflow e chama o treino.
 # Suporta: init_from = 'scratch' (treino do zero) ou 'gpt2' (transplante parcial seguro).
-# Observação: transplante GPT-2 -> arquitetura "modern" só é direto quando n_kv_head == n_head.
+# Observação: transplante GPT-2 ->  arquitetura "modern" só é direto quando n_kv_head == n_head.
 import os
 os.environ['CUBLAS_WORKSPACE_CONFIG'] = ':4096:8'
 os.environ["TOKENIZERS_PARALLELISM"] = "false"

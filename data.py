@@ -1,5 +1,6 @@
 # data.py
 # Carregador leve de tokens .npy com suporte a DDP, memmap, shuffle por época e checagens robustas.
+# Rian Costa Ferreira.
 
 import os
 import numpy as np
