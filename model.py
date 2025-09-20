@@ -1,6 +1,7 @@
 # model.py
 # Versão “baseline” com RoPE real-valued (sem dtypes complexos), KV-cache, SDPA,
-# RMSNorm, SwiGLU e transplante parcial de GPT-2. Sem chunking de CE.
+# RMSNorm, SwiGLU e transplante parcial de GPT-2. Sem chunking de CE..
+# Rian Costa Ferreira.
 
 import math
 from dataclasses import dataclass
