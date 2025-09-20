@@ -41,3 +41,6 @@ Esta versão implementa otimizações cruciais que se tornaram padrão em modelo
 *   PyTorch 2.x (com suporte a CUDA para melhor performance)
 *   Dependências adicionais: `numpy`, `tiktoken`, `transformers`, `tqdm`, `mlflow` (opcional).
 
+## Relatório Técnico
+
+*  `https://www.overleaf.com/read/prvwjxcjfxfn#1ebc57`
