@@ -52,22 +52,6 @@ Thumbs.db
 
 
 
-# Artefatos e dados locais
-
-artifacts/
-
-log_scratch/
-
-logs/
-
-data/
-
-checkpoints/
-
-runs/
-
-
-
 # Modelos e arrays
 
 *.pt
