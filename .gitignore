@@ -1,0 +1,93 @@
+cat > .gitignore << 'EOF'
+
+# Python
+
+__pycache__/
+
+*.py[cod]
+
+*.so
+
+*.pyd
+
+*.egg-info/
+
+*.dist-info/
+
+.venv/
+
+venv/
+
+env/
+
+ENV/
+
+pip-wheel-metadata/
+
+
+
+# Notebooks
+
+.ipynb_checkpoints/
+
+
+
+# Sistemas/editores
+
+.DS_Store
+
+Thumbs.db
+
+.vscode/
+
+.idea/
+
+
+
+# Logs e eventos
+
+*.log
+
+*.tfevents*
+
+
+
+# Artefatos e dados locais
+
+artifacts/
+
+log_scratch/
+
+logs/
+
+data/
+
+checkpoints/
+
+runs/
+
+
+
+# Modelos e arrays
+
+*.pt
+
+*.pth
+
+*.ckpt
+
+*.bin
+
+*.safetensors
+
+*.npy
+
+*.npz
+
+
+
+# Cache de pacotes
+
+.cache/
+
+EOF
