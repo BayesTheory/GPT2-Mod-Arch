@@ -1,66 +1,106 @@
 # data.py
-# Contém o DataLoaderLite, responsável por carregar os dados pré-tokenizados
-# de forma eficiente para o treinamento, com suporte a DDP.
+# Carregador leve de tokens .npy com suporte a DDP, memmap, shuffle por época e checagens robustas.
 
 import os
 import numpy as np
 import torch
+from typing import List, Optional
 
-# -----------------------------------------------------------------------------
-# Carregador de Dados
-
-def load_tokens(filename):
-    """ Carrega tokens de um arquivo .npy e converte para um tensor PyTorch. """
-    npt = np.load(filename)
-    npt = npt.astype(np.int32) # Garante o tipo de dado correto
-    ptt = torch.tensor(npt, dtype=torch.long)
-    return ptt
+def load_tokens(filename: str, mmap: bool = True) -> np.ndarray:
+    """
+    Carrega tokens de um arquivo .npy como ndarray (int32/int64).
+    Usa memmap para reduzir RAM quando possível.
+    """
+    if mmap:
+        npt = np.load(filename, mmap_mode='r')
+    else:
+        npt = np.load(filename)
+    if npt.dtype not in (np.int32, np.int64):
+        npt = npt.astype(np.int32, copy=False)
+    return npt
 
 class DataLoaderLite:
-    def __init__(self, B, T, process_rank, num_processes, split, data_root="edu_fineweb10B"):
+    def __init__(
+        self,
+        B: int,
+        T: int,
+        process_rank: int,
+        num_processes: int,
+        split: str,
+        data_root: str = "tinystories_npy",
+        seed: int = 1337,
+        mmap: bool = True,
+        shuffle: bool = True,
+    ):
+        assert split in {"train", "val"}
         self.B = B
         self.T = T
         self.process_rank = process_rank
         self.num_processes = num_processes
-        assert split in {'train', 'val'}
+        self.split = split
+        self.data_root = data_root
+        self.seed = seed
+        self.shuffle = shuffle
+        self.mmap = mmap
 
-        # Encontra os arquivos shard para o split (train/val)
-        shards = os.listdir(data_root)
-        shards = [s for s in shards if split in s]
-        shards = sorted(shards)
-        shards = [os.path.join(data_root, s) for s in shards]
-        self.shards = shards
-        assert len(shards) > 0, f"Nenhum shard encontrado para o split '{split}' no diretório '{data_root}'"
-        
-        # Imprime o número de shards encontrados apenas no processo mestre
+        shards = sorted(
+            os.path.join(data_root, s)
+            for s in os.listdir(data_root)
+            if split in s and s.endswith(".npy")
+        )
+        assert len(shards) > 0, f"Nenhum shard '{split}' em {data_root}"
+        self.shards: List[str] = shards
+
         if self.process_rank == 0:
-            print(f"Encontrados {len(shards)} shards para o split {split}")
-        
-        self.reset()
+            print(f"Encontrados {len(shards)} shards para {split}")
 
-    def reset(self):
-        # Reseta o estado, começando do primeiro shard
-        self.current_shard = 0
-        self.tokens = load_tokens(self.shards[self.current_shard])
-        # A posição inicial é deslocada para cada processo, para que eles leiam partes diferentes dos dados
+        self._rng = np.random.RandomState(self.seed)
+        self.epoch = 0
+        self._order = np.arange(len(self.shards), dtype=np.int32)
+        self._maybe_shuffle_order()
+        self._load_shard(0)
+        self.current_position = self.B * self.T * self.process_rank
+
+    def _maybe_shuffle_order(self):
+        if self.shuffle and self.split == "train":
+            self._rng.seed(self.seed + self.epoch)
+            self._rng.shuffle(self._order)
+
+    def _load_shard(self, order_idx: int):
+        self.current_shard_order_idx = order_idx % len(self.shards)
+        shard_idx = int(self._order[self.current_shard_order_idx])
+        self.current_shard_path = self.shards[shard_idx]
+        self.tokens_np = load_tokens(self.current_shard_path, mmap=self.mmap)
+        self.tokens_len = int(self.tokens_np.shape[0])
+
+    def _advance_shard(self):
+        self._load_shard(self.current_shard_order_idx + 1)
+        self.current_position = self.B * self.T * self.process_rank
+
+    def reset(self, epoch: Optional[int] = None):
+        if epoch is not None:
+            self.epoch = int(epoch)
+        self._maybe_shuffle_order()
+        self._load_shard(0)
         self.current_position = self.B * self.T * self.process_rank
 
     def next_batch(self):
         B, T = self.B, self.T
-        # Carrega um buffer de tokens um pouco maior (B*T + 1) para garantir que temos x e y
-        buf = self.tokens[self.current_position : self.current_position + B * T + 1]
-        x = (buf[:-1]).view(B, T) # inputs
-        y = (buf[1:]).view(B, T) # targets
-        
-        # Avança a posição no tensor para a próxima leitura
+        need = B * T + 1
+
+        while self.current_position + need > self.tokens_len:
+            self._advance_shard()
+
+        buf_np = self.tokens_np[self.current_position : self.current_position + need]
+        buf = torch.tensor(np.asarray(buf_np), dtype=torch.long)
+
+
+        x = buf[:-1].reshape(B, T)
+        y = buf[1:].reshape(B, T)
+
         self.current_position += B * T * self.num_processes
-        
-        # Se o próximo batch estourar os limites do shard atual, avança para o próximo shard
-        if self.current_position + (B * T * self.num_processes + 1) > len(self.tokens):
-            self.current_shard = (self.current_shard + 1) % len(self.shards)
-            # Carrega os tokens do novo shard
-            self.tokens = load_tokens(self.shards[self.current_shard])
-            # Reseta a posição inicial para o rank do processo atual
-            self.current_position = self.B * self.T * self.process_rank
-            
+
+        if self.current_position + need > self.tokens_len:
+            self._advance_shard()
+
         return x, y

@@ -1,0 +1,10 @@
+__pycache__/
+*.pt
+*.pth
+*.bin
+data/
+datasets/
+tinystories_npy/
+.env
+.git
+*.ipynb_checkpoints

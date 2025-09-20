@@ -1,0 +1,15 @@
+artifact_uri: file:///home/users/rianagario/Testes%20arquivados/testes%20Portif%C3%B3lio/GPT2/mlruns/706298003787278334/4ea46998593240b9aa121c3dcddec669/artifacts
+end_time: 1758350687344
+entry_point_name: ''
+experiment_id: '706298003787278334'
+lifecycle_stage: active
+run_id: 4ea46998593240b9aa121c3dcddec669
+run_name: TinyModel-modern
+run_uuid: 4ea46998593240b9aa121c3dcddec669
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758340346066
+status: 3
+tags: []
+user_id: rianagario

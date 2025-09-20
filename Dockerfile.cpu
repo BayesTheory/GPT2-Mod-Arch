@@ -1,0 +1,13 @@
+# syntax=docker/dockerfile:1
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY verify_ckpt.py /app/verify_ckpt.py
+
+# utilitário leve para sha256
+RUN apt-get update && apt-get install -y --no-install-recommends openssl \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV CKPT_PATH=/artifacts/model.pt
+
+ENTRYPOINT ["python", "-u", "verify_ckpt.py"]
