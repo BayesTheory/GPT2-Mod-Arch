@@ -55,4 +55,5 @@ Treinado do zero em um dataset de 2 GB, o modelo validou a eficácia da arquitet
 ## Teste Técnico
 
 ![Teste](https://raw.githubusercontent.com/BayesTheory/GPT2-Mod-Arch/main/img/print.jpeg)
+![Teste](https://raw.githubusercontent.com/BayesTheory/GPT2-Mod-Arch/main/img/print (2).jpeg)
 
