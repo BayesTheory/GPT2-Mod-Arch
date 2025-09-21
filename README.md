@@ -47,3 +47,7 @@ Esta versão implementa otimizações cruciais que se tornaram padrão em modelo
 ## Relatório Técnico
 
 *  `https://www.overleaf.com/read/prvwjxcjfxfn#1ebc57`
+
+## Teste Técnico
+
+![Teste](https://github.com/BayesTheory/GPT2-Mod-Arch/tree/main/img/print.jpeg)
