@@ -50,4 +50,4 @@ Esta versão implementa otimizações cruciais que se tornaram padrão em modelo
 
 ## Teste Técnico
 
-![Teste](https://github.com/BayesTheory/GPT2-Mod-Arch/tree/main/img/print.jpeg)
+![Teste]([https://github.com/BayesTheory/GPT2-Mod-Arch/tree/main/img/print.jpeg](https://raw.githubusercontent.com/BayesTheory/GPT2-Mod-Arch/main/img/print.jpeg))
