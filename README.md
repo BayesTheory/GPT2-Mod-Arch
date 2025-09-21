@@ -35,6 +35,9 @@ Esta versão implementa otimizações cruciais que se tornaram padrão em modelo
 
 ## 🚀 Comece a Usar em Minutos
 
+###. Modelo
+*  `https://huggingface.co/rianagario/GPT2-Mod-Arch`
+
 ###. Requisitos
 
 *   Python 3.9+
