@@ -35,7 +35,7 @@ Esta versão implementa otimizações cruciais que se tornaram padrão em modelo
 
 ## 🚀 Comece a Usar em Minutos
 
-### 1. Requisitos
+###. Requisitos
 
 *   Python 3.9+
 *   PyTorch 2.x (com suporte a CUDA para melhor performance)
