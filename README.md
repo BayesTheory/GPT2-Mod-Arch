@@ -48,6 +48,10 @@ Esta versão implementa otimizações cruciais que se tornaram padrão em modelo
 
 *  `https://www.overleaf.com/read/prvwjxcjfxfn#1ebc57`
 
+## Resumo Resultado
+
+Treinado do zero em um dataset de 2 GB, o modelo validou a eficácia da arquitetura modernizada ao aprender a gerar sentenças gramaticalmente corretas. No entanto, como esperado para o volume de dados, o treinamento levou a um overfitting, fazendo com que o modelo se especializasse excessivamente no conteúdo do corpus. Isso se manifestou em uma forte tendência a associar conceitos a personagens específicos, tornando-o um "gerador de histórias" com viés narrativo, em vez de um modelo de linguagem generalista. O resultado sublinha que a performance da arquitetura é diretamente limitada pela escala e diversidade do dataset de treinamento.
+
 ## Teste Técnico
 
 ![Teste](https://raw.githubusercontent.com/BayesTheory/GPT2-Mod-Arch/main/img/print.jpeg)
